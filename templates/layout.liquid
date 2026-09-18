@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ post.title | default: page.title | default: site.name | escape }}{% if post.title or page.title %} &mdash; {{ site.name | escape }}{% endif %}</title>
+    {% if site.description != "" %}<meta name="description" content="{{ site.description | escape }}" />{% endif %}
+    {% if post and post.post_options.featured_image != "" %}<meta property="og:image" content="{{ post.post_options.featured_image }}" />{% endif %}
+    {% if theme.tokens.favicon != "" %}<link rel="icon" href="{{ theme.tokens.favicon }}" />{% endif %}
+
+    {% assign headline_font = theme.tokens.headline_font | default: "Playfair Display" %}
+    {% assign body_font = theme.tokens.body_font | default: "Source Serif 4" %}
+    {% assign flag_font = theme.tokens.flag_font | default: "Match the headline face" %}
+    {% if flag_font == "Match the headline face" %}{% assign flag_font = headline_font %}{% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;700&family={{ headline_font | replace: ' ', '+' }}:ital,wght@0,400;0,700;1,400{% unless body_font == 'System serif' or body_font == headline_font %}&family={{ body_font | replace: ' ', '+' }}:ital,wght@0,400;0,700;1,400{% endunless %}&display=swap" />
+    {% if flag_font == "UnifrakturMaguntia" %}
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" />
+    {% elsif flag_font != headline_font %}
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ flag_font | replace: ' ', '+' }}:wght@400;700&display=swap" />
+    {% endif %}
+
+    <style>
+      {{ theme.css }}
+      :root {
+        --paper: {{ theme.tokens.paper | default: "#ffffff" }};
+        --ink: {{ theme.tokens.ink | default: "#121212" }};
+        --muted: {{ theme.tokens.muted | default: "#666666" }};
+        --rule: {{ theme.tokens.rule | default: "#dfdfdf" }};
+        --accent: {{ theme.tokens.accent | default: "#326891" }};
+        --flag-ink: {{ theme.tokens.flag_color | default: "#121212" }};
+        --max: {{ theme.tokens.max | default: "1280px" }};
+        --measure: {{ theme.tokens.article_max | default: "40rem" }};
+        --size: {{ theme.tokens.base_size | default: "18px" }};
+        --serif: "{{ headline_font }}", Georgia, "Times New Roman", serif;
+        --body: {% unless body_font == "System serif" %}"{{ body_font }}", {% endunless %}Georgia, "Times New Roman", serif;
+        --flag: "{{ flag_font }}", Georgia, serif;
+        --sans: "Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        --align: {% if theme.tokens.justify_body %}justify{% else %}left{% endif %};
+        --hyphens: {% if theme.tokens.justify_body %}auto{% else %}manual{% endif %};
+        --hair: {% if theme.tokens.column_rules == false %}transparent{% else %}var(--rule){% endif %};
+      }
+      {{ site.css_overrides }}
+    </style>
+  </head>
+  <body class="scale-{{ theme.tokens.headline_scale | default: 'normal' }} flag-{{ theme.tokens.flag_scale | default: 'normal' }}{% if theme.tokens.drop_cap %} drop-cap{% endif %}">
+    {% unless page.page_options.show_navigation == false %}
+      <header class="masthead flag-{{ theme.tokens.flag_align | default: 'centered' }}">
+        <div class="dateline">
+          <span>{% if theme.tokens.show_date %}{{ "now" | date: "%A, %B %-d, %Y" }}{% endif %}</span>
+          {% if theme.tokens.edition_line != "" %}<span class="edition">{{ theme.tokens.edition_line | escape }}</span>{% endif %}
+        </div>
+        <a class="flag" href="/">{{ site.name | escape }}</a>
+        {% if theme.tokens.show_tagline and site.description != "" %}
+          <p class="flag-tagline">{{ site.description | escape }}</p>
+        {% endif %}
+      </header>
+
+      {% assign nav_items = theme.tokens.nav %}
+      {% if nav_items == empty and theme.tokens.nav_fallback_pages != false %}
+        <nav class="rail{% if theme.tokens.nav_sticky %} sticky{% endif %}" aria-label="Sections">
+          <ul class="rail-list">
+            {% for p in pages %}<li class="rail-item"><a href="{{ p.url }}">{{ p.title | escape }}</a></li>{% endfor %}
+          </ul>
+        </nav>
+      {% elsif nav_items != empty %}
+        <nav class="rail{% if theme.tokens.nav_sticky %} sticky{% endif %}" aria-label="Sections">
+          <ul class="rail-list">
+            {% for item in nav_items %}
+              {% assign parent = item.parent | default: "" %}
+              {% if parent == "" %}
+                {% assign kids = nav_items | where: "parent", item.label %}{% assign kid_count = kids | size %}
+                <li class="rail-item{% if kid_count > 0 %} has-menu{% endif %}">
+                  <a href="{{ item.url | default: '/' }}">{{ item.label | escape }}{% if kid_count > 0 %}<span class="caret" aria-hidden="true"></span>{% endif %}</a>
+                  {% if kid_count > 0 %}
+                    <div class="menu">
+                      <ul>
+                        {% for kid in kids %}
+                          <li>
+                            <a href="{{ kid.url | default: '/' }}">
+                              <span class="menu-label">{{ kid.label | escape }}</span>
+                              {% if kid.note != "" %}<span class="menu-note">{{ kid.note | escape }}</span>{% endif %}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+    {% endunless %}
+
+    <main class="{% if page.page_options.layout == 'wide' %}wide{% else %}contained{% endif %}">
+      {{ content }}
+    </main>
+
+    <footer class="colophon">
+      <div class="colophon-inner">
+        {% if theme.tokens.footer_nav and theme.tokens.nav != empty %}
+          <div class="colophon-columns">
+            {% for item in theme.tokens.nav %}
+              {% assign parent = item.parent | default: "" %}
+              {% if parent == "" %}
+                {% assign kids = theme.tokens.nav | where: "parent", item.label %}{% assign kid_count = kids | size %}
+                <div class="colophon-column">
+                  <h2><a href="{{ item.url | default: '/' }}">{{ item.label | escape }}</a></h2>
+                  {% if kid_count > 0 %}
+                    <ul>
+                      {% for kid in kids %}<li><a href="{{ kid.url | default: '/' }}">{{ kid.label | escape }}</a></li>{% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="colophon-note">
+          <p class="colophon-flag">{{ site.name | escape }}</p>
+          {% if theme.tokens.footer_note != "" %}<p>{{ theme.tokens.footer_note | escape }}</p>{% endif %}
+          <p>Published with <a href="https://masthead.site" target="_blank" rel="noopener">Masthead</a></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

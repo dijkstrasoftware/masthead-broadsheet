@@ -1,0 +1,29 @@
+{
+  "site": {
+    "name": "The Broadsheet",
+    "description": "An independent daily, printed nowhere.",
+    "homepage": "front"
+  },
+  "tokens": {
+    "nav": [
+      { "label": "Front page", "url": "/", "parent": "", "note": "" },
+      { "label": "World", "url": "/world", "parent": "", "note": "" },
+      { "label": "Europe", "url": "/world", "parent": "World", "note": "Brussels, Berlin and the borderlands" },
+      { "label": "Americas", "url": "/world", "parent": "World", "note": "From Nunavut to Tierra del Fuego" },
+      { "label": "Asia Pacific", "url": "/world", "parent": "World", "note": "" },
+      { "label": "Business", "url": "/business", "parent": "", "note": "" },
+      { "label": "Markets", "url": "/business", "parent": "Business", "note": "Updated through the trading day" },
+      { "label": "Technology", "url": "/business", "parent": "Business", "note": "" },
+      { "label": "The Economy", "url": "/business", "parent": "Business", "note": "" },
+      { "label": "Culture", "url": "/weekend", "parent": "", "note": "" },
+      { "label": "Books", "url": "/weekend", "parent": "Culture", "note": "" },
+      { "label": "Film & TV", "url": "/weekend", "parent": "Culture", "note": "" },
+      { "label": "Music", "url": "/weekend", "parent": "Culture", "note": "" },
+      { "label": "Opinion", "url": "/opinion", "parent": "", "note": "" },
+      { "label": "Weekend", "url": "/weekend", "parent": "", "note": "" },
+      { "label": "Live", "url": "/briefing", "parent": "", "note": "" },
+      { "label": "Archive", "url": "/archive", "parent": "", "note": "" }
+    ],
+    "footer_note": "Broadsheet is a demonstration edition. No news was harmed in its making."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "label": "Section front",
+  "description": "A section index. Lock it to a tag and it becomes that section's page; leave the tag empty and it lists everything with a tag filter across the top.",
+  "page_options": [
+    {
+      "key": "tag",
+      "label": "Locked to tag",
+      "type": "string",
+      "default": "",
+      "category": "Listing",
+      "description": "Type the tag the way you wrote it on the post — Business, The Economy, Asia Pacific. Capitals and spaces do not matter. Not sure what you have used? Open a Section front with no tag set: the filter chips across the top list every tag on the site. Leave empty to list every post and show the tag filter across the top."
+    },
+    {
+      "key": "style",
+      "label": "Listing style",
+      "type": "select",
+      "options": [
+        "ledger",
+        "grid"
+      ],
+      "default": "ledger",
+      "category": "Listing"
+    },
+    {
+      "key": "show_dates",
+      "label": "Show dates",
+      "type": "boolean",
+      "default": true,
+      "category": "Listing"
+    },
+    {
+      "key": "kicker",
+      "label": "Kicker",
+      "type": "string",
+      "default": "",
+      "category": "Header"
+    },
+    {
+      "key": "standfirst",
+      "label": "Standfirst",
+      "type": "text",
+      "default": "",
+      "category": "Header"
+    },
+    {
+      "key": "show_navigation",
+      "label": "Show the masthead and section rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Appearance"
+    }
+  ]
+}

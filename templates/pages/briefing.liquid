@@ -1,0 +1,77 @@
+<div class="briefing density-{{ page.page_options.density | default: 'tight' }}">
+  <header class="briefing-head">
+    {% if page.page_options.kicker != "" %}<p class="kicker">{{ page.page_options.kicker | escape }}</p>{% endif %}
+    <h1 class="headline">{{ page.title | escape }}</h1>
+    {% if page.page_options.standfirst != "" %}<p class="standfirst">{{ page.page_options.standfirst | escape }}</p>{% endif %}
+    {% if page.page_options.byline != "" %}<p class="byline">{{ page.page_options.byline | escape }}</p>{% endif %}
+  </header>
+
+  <div class="briefing-body{% unless page.page_options.show_rail and page.page_options.rail != empty %} no-rail{% endunless %}">
+    <div class="briefing-main">
+      {% if body_html != "" %}<div class="page-body">{{ body_html }}</div>{% endif %}
+
+      {% assign bulletins_tag = page.page_options.bulletins_tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}
+      {% if bulletins_tag != "" %}{% assign bulletin_posts = posts | where_tag: bulletins_tag %}{% endif %}
+      {% assign bulletin_slugs = "|" %}
+      {% assign hand_count = page.page_options.bulletins | size %}{% assign auto_count = bulletin_posts | size %}{% assign bulletin_total = hand_count | plus: auto_count %}
+      {% if page.page_options.show_bulletins and bulletin_total > 0 %}
+        {% assign today = "now" | date: "%Y-%m-%d" %}
+        <ol class="bulletins">
+          {% for item in page.page_options.bulletins %}
+            <li>
+              {% if item.time != "" %}<p class="stamp">{{ item.time | escape }}</p>{% endif %}
+              <h2 class="headline"><a href="{{ item.url | default: '#' }}">{{ item.headline | escape }}</a></h2>
+              {% if item.summary != "" %}<p class="summary">{{ item.summary | escape }}</p>{% endif %}
+            </li>
+          {% endfor %}
+          {% for post in bulletin_posts limit: page.page_options.bulletins_count %}
+            {% assign bulletin_slugs = bulletin_slugs | append: post.slug | append: "|" %}
+            {% assign posted_on = post.published_at | strftime: "%Y-%m-%d" %}
+            <li>
+              {% if post.published_at %}
+                <p class="stamp"><time datetime="{{ post.published_at | iso8601 }}">{% if posted_on == today %}{{ post.published_at | strftime: "%-I:%M %P" }}{% else %}{{ post.published_at | strftime: "%b %-d, %-I:%M %P" }}{% endif %}</time></p>
+              {% endif %}
+              <h2 class="headline"><a href="{{ post.url }}">{{ post.title | escape }}</a></h2>
+              {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      {% endif %}
+
+      {% assign posts_tag = page.page_options.posts_tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}{% if posts_tag == "" %}{% assign filed = posts %}{% else %}{% assign filed = posts | where_tag: posts_tag %}{% endif %}
+      {% assign shown = 0 %}
+      {% capture coverage %}
+        {% for post in filed %}
+          {% if shown >= page.page_options.posts_count %}{% break %}{% endif %}
+          {% capture slug_key %}|{{ post.slug }}|{% endcapture %}
+          {% if bulletin_slugs contains slug_key %}{% continue %}{% endif %}
+          {% assign shown = shown | plus: 1 %}
+          <li>
+            <a href="{{ post.url }}">
+              <h3 class="headline">{{ post.title | escape }}</h3>
+              {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+            </a>
+            {% if post.published_at %}
+              <time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%b %-d" }}</time>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% endcapture %}
+      {% if page.page_options.show_posts and shown > 0 %}
+        <section class="band">
+          {% if page.page_options.posts_title != "" %}<h2 class="band-title">{{ page.page_options.posts_title | escape }}</h2>{% endif %}
+          <ul class="ledger">{{ coverage }}</ul>
+        </section>
+      {% endif %}
+    </div>
+
+    {% if page.page_options.show_rail and page.page_options.rail != empty %}
+      <aside class="side-rail">
+        {% if page.page_options.rail_title != "" %}<h2 class="band-title">{{ page.page_options.rail_title | escape }}</h2>{% endif %}
+        <ul>
+          {% for link in page.page_options.rail %}<li><a href="{{ link.url | default: '#' }}">{{ link.label | escape }}</a></li>{% endfor %}
+        </ul>
+      </aside>
+    {% endif %}
+  </div>
+</div>

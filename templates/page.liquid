@@ -1,0 +1,8 @@
+<article class="article">
+  <header class="article-head">
+    {% if page.page_options.kicker != "" %}<p class="kicker">{{ page.page_options.kicker | escape }}</p>{% endif %}
+    <h1 class="headline">{{ page.title | escape }}</h1>
+    {% if page.page_options.standfirst != "" %}<p class="standfirst">{{ page.page_options.standfirst | escape }}</p>{% endif %}
+  </header>
+  <div class="page-body">{{ body_html }}</div>
+</article>

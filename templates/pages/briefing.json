@@ -1,0 +1,168 @@
+{
+  "label": "Briefing",
+  "description": "A dense, timestamped front page. A standfirst, a run of bulletins filed by tagging posts, then the latest posts as a tight ledger. Good as a homepage when the news matters more than the pictures.",
+  "page_options": [
+    {
+      "key": "kicker",
+      "label": "Kicker",
+      "type": "string",
+      "default": "Live",
+      "category": "Header"
+    },
+    {
+      "key": "standfirst",
+      "label": "Standfirst",
+      "type": "text",
+      "default": "",
+      "category": "Header"
+    },
+    {
+      "key": "byline",
+      "label": "Byline",
+      "type": "string",
+      "default": "",
+      "category": "Header"
+    },
+    {
+      "key": "show_bulletins",
+      "label": "Show bulletins",
+      "type": "boolean",
+      "default": true,
+      "category": "Bulletins"
+    },
+    {
+      "key": "bulletins_tag",
+      "label": "Pull bulletins from tag",
+      "type": "string",
+      "default": "Live",
+      "category": "Bulletins",
+      "description": "Every post carrying this tag becomes a bulletin, newest first, stamped with the time it was published. You file a bulletin by tagging a post. Type the tag the way you wrote it on the post; capitals and spaces do not matter. Leave empty to write every bulletin by hand below."
+    },
+    {
+      "key": "bulletins_count",
+      "label": "How many from the tag",
+      "type": "number",
+      "default": 8,
+      "category": "Bulletins"
+    },
+    {
+      "key": "bulletins",
+      "label": "Pinned bulletins",
+      "type": "list",
+      "item_label": "Bulletin",
+      "category": "Bulletins",
+      "default": [],
+      "description": "Written by hand and printed above the tagged ones: for breaking lines that have no post yet.",
+      "fields": [
+        {
+          "key": "time",
+          "label": "Timestamp",
+          "type": "string",
+          "default": "",
+          "description": "Free text, e.g. '9:14 a.m.' or 'Updated'."
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "summary",
+          "label": "Summary",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "url",
+          "label": "Links to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "key": "show_posts",
+      "label": "Show latest posts",
+      "type": "boolean",
+      "default": true,
+      "category": "Latest posts"
+    },
+    {
+      "key": "posts_tag",
+      "label": "Tag",
+      "type": "string",
+      "default": "",
+      "category": "Latest posts",
+      "description": "Type the tag the way you wrote it on the post — Business, The Economy, Asia Pacific. Capitals and spaces do not matter. Not sure what you have used? Open a Section front with no tag set: the filter chips across the top list every tag on the site. Leave empty for the latest posts regardless of tag. Stories already shown as bulletins are left out."
+    },
+    {
+      "key": "posts_title",
+      "label": "Band title",
+      "type": "string",
+      "default": "More coverage",
+      "category": "Latest posts"
+    },
+    {
+      "key": "posts_count",
+      "label": "How many",
+      "type": "number",
+      "default": 10,
+      "category": "Latest posts"
+    },
+    {
+      "key": "density",
+      "label": "Density",
+      "type": "select",
+      "options": [
+        "tight",
+        "comfortable"
+      ],
+      "default": "tight",
+      "category": "Latest posts"
+    },
+    {
+      "key": "show_rail",
+      "label": "Show side rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Side rail"
+    },
+    {
+      "key": "rail_title",
+      "label": "Rail title",
+      "type": "string",
+      "default": "What else",
+      "category": "Side rail"
+    },
+    {
+      "key": "rail",
+      "label": "Rail links",
+      "type": "list",
+      "item_label": "Link",
+      "category": "Side rail",
+      "default": [],
+      "fields": [
+        {
+          "key": "label",
+          "label": "Label",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "url",
+          "label": "Links to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "key": "show_navigation",
+      "label": "Show the masthead and section rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Appearance"
+    }
+  ]
+}

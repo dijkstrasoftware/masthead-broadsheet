@@ -1,0 +1,126 @@
+{% assign lead = page.page_options.lead %}
+{% assign lead_tag = lead.tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}
+{% if lead_tag != "" %}{% assign lead_post = posts | where_tag: lead_tag | first %}{% endif %}
+
+{% assign lead_headline = lead.headline %}
+{% assign lead_url = lead.url %}
+{% assign lead_standfirst = lead.standfirst %}
+{% assign lead_kicker = lead.kicker %}
+{% assign lead_byline = lead.byline %}
+{% assign lead_image = lead.image %}
+{% assign lead_image_alt = "" %}
+{% assign lead_caption = lead.caption %}
+{% if lead_post %}
+  {% assign lead_options = lead_post.post_options %}
+  {% assign lead_headline = lead_post.title %}
+  {% assign lead_url = lead_post.url %}
+  {% if lead.standfirst == "" %}{% assign lead_standfirst = lead_post.excerpt %}{% endif %}
+  {% if lead.kicker == "" %}{% assign lead_kicker = lead_options.kicker %}{% endif %}
+  {% if lead_kicker == "" and lead_post.tags != empty %}{% assign lead_kicker = lead_post.tags | first | map: 'name' %}{% endif %}
+  {% if lead.byline == "" %}{% assign lead_byline = lead_options.byline %}{% endif %}
+  {% if lead.image == "" %}
+    {% assign lead_image = lead_options.featured_image %}
+    {% assign lead_image_alt = lead_options.featured_image_alt %}
+    {% if lead.caption == "" %}{% assign lead_caption = lead_options.caption %}{% endif %}
+  {% endif %}
+{% endif %}
+
+<div class="front">
+  {% if page.page_options.show_lead and lead_headline != "" %}
+    <section class="band lead lead-{{ lead.arrangement | default: "image beside" | replace: " ", "-" }}{% if lead_image == "" %} lead-noimage{% endif %}">
+      {% if lead_image != "" and lead.arrangement != "text only" %}
+        <figure class="lead-figure">
+          <img src="{{ lead_image }}" alt="{{ lead_image_alt | escape }}" />
+          {% if lead_caption != "" %}<figcaption>{{ lead_caption | escape }}</figcaption>{% endif %}
+        </figure>
+      {% endif %}
+      <div class="lead-text">
+        {% if lead_kicker != "" %}<p class="kicker">{{ lead_kicker | escape }}</p>{% endif %}
+        <h1 class="headline"><a href="{{ lead_url | default: '#' }}">{{ lead_headline | escape }}</a></h1>
+        {% if lead_standfirst != "" %}<p class="standfirst">{{ lead_standfirst | escape }}</p>{% endif %}
+        {% if lead_byline != "" %}<p class="byline">{{ lead_byline | escape }}</p>{% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% for band in page.page_options.bands %}
+    {% assign band_tag = band.tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}
+    {% if band_tag == "" %}
+      {% assign filed = posts %}
+    {% else %}
+      {% assign filed = posts | where_tag: band_tag %}
+    {% endif %}
+    {% assign filed_count = filed | size %}
+
+    {% if filed_count > 0 %}
+      {% assign layout = band.layout | default: "three across" %}
+      <section class="band band-{{ layout | replace: " ", "-" }}">
+        {% if band.title != "" %}
+          <h2 class="band-title">
+            {{ band.title | escape }}
+            {% if band.more_url != "" %}<a class="band-more" href="{{ band.more_url }}">More</a>{% endif %}
+          </h2>
+        {% endif %}
+
+        {% if layout == "ledger" %}
+          <ul class="ledger">
+            {% for post in filed limit: band.count %}
+              {% unless post.slug == lead_post.slug %}
+                <li>
+                  <a href="{{ post.url }}">
+                    <h3 class="headline">{{ post.title | escape }}</h3>
+                    {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+                  </a>
+                  {% if band.show_dates and post.published_at %}
+                    <time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%B %-d, %Y" }}</time>
+                  {% endif %}
+                </li>
+              {% endunless %}
+            {% endfor %}
+          </ul>
+
+        {% elsif layout == "opinion strip" %}
+          <ul class="opinion-strip">
+            {% for post in filed limit: band.count %}
+              {% unless post.slug == lead_post.slug %}
+                <li>
+                  <a href="{{ post.url }}">
+                    {% if post.post_options.byline != "" %}
+                      <span class="opinion-author">{{ post.post_options.byline | escape }}</span>
+                    {% elsif band_tag == "" and post.tags != empty %}
+                      <span class="opinion-author">{{ post.tags | first | map: "name" | escape }}</span>
+                    {% endif %}
+                    <span class="opinion-headline">{{ post.title | escape }}</span>
+                  </a>
+                </li>
+              {% endunless %}
+            {% endfor %}
+          </ul>
+
+        {% else %}
+          <div class="grid-inner">
+            {% for post in filed limit: band.count %}
+              {% unless post.slug == lead_post.slug %}
+                {% assign kicker = post.post_options.kicker %}
+                {% if kicker == "" and band_tag == "" and post.tags != empty %}{% assign kicker = post.tags | first | map: "name" %}{% endif %}
+                <article class="story">
+                  <a href="{{ post.url }}">
+                    {% if band.show_images != false and post.post_options.featured_image != "" %}<img class="story-image" src="{{ post.post_options.featured_image }}" alt="{{ post.post_options.featured_image_alt | escape }}" loading="lazy" />{% endif %}
+                    {% if kicker != "" %}<p class="kicker">{{ kicker | escape }}</p>{% endif %}
+                    <h3 class="headline">{{ post.title | escape }}</h3>
+                    {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+                  </a>
+                  {% if band.show_dates and post.published_at %}
+                    <time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%B %-d, %Y" }}</time>
+                  {% endif %}
+                </article>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </section>
+    {% endif %}
+  {% endfor %}
+
+  {% if body_html != "" %}<div class="page-body measure">{{ body_html }}</div>{% endif %}
+</div>

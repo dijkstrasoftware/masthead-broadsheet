@@ -1,0 +1,160 @@
+{
+  "label": "Front page",
+  "description": "A front page that builds itself from tags. You set the lead story and a list of bands; each band pulls the latest posts carrying one tag, so publishing a post files it on the front page automatically.",
+  "page_options": [
+    {
+      "key": "show_lead",
+      "label": "Show lead story",
+      "type": "boolean",
+      "default": true,
+      "category": "Lead story"
+    },
+    {
+      "key": "lead",
+      "label": "Lead story",
+      "type": "object",
+      "category": "Lead story",
+      "fields": [
+        {
+          "key": "tag",
+          "label": "Pull from tag",
+          "type": "string",
+          "default": "",
+          "description": "The newest post carrying this tag becomes the lead, so you promote a story by tagging it. Type the tag the way you wrote it on the post — Business, The Economy, Asia Pacific. Capitals and spaces do not matter. Not sure what you have used? Open a Section front with no tag set: the filter chips across the top list every tag on the site. Leave empty to write the lead by hand below."
+        },
+        {
+          "key": "image",
+          "label": "Image",
+          "type": "file",
+          "default": "",
+          "description": "Leave empty to use the post's featured image. Set one here to override it on the front page only."
+        },
+        {
+          "key": "caption",
+          "label": "Caption",
+          "type": "string",
+          "default": "",
+          "description": "Leave empty to use the caption on the post's featured image."
+        },
+        {
+          "key": "kicker",
+          "label": "Kicker",
+          "type": "string",
+          "default": "",
+          "description": "Leave empty to use the post's kicker, or its first tag."
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "string",
+          "default": "",
+          "description": "Ignored when a tag is set."
+        },
+        {
+          "key": "standfirst",
+          "label": "Standfirst",
+          "type": "text",
+          "default": "",
+          "description": "Overrides the post's excerpt."
+        },
+        {
+          "key": "byline",
+          "label": "Byline",
+          "type": "string",
+          "default": "",
+          "description": "Leave empty to use the post's byline."
+        },
+        {
+          "key": "url",
+          "label": "Links to",
+          "type": "string",
+          "default": "",
+          "description": "Ignored when a tag is set."
+        },
+        {
+          "key": "arrangement",
+          "label": "Arrangement",
+          "type": "select",
+          "options": [
+            "image above",
+            "image beside",
+            "image full-bleed",
+            "text only"
+          ],
+          "default": "image beside"
+        }
+      ]
+    },
+    {
+      "key": "bands",
+      "label": "Bands",
+      "type": "list",
+      "item_label": "Band",
+      "category": "Bands",
+      "default": [],
+      "description": "Each band is one tag. Add a band, name the tag, and every post you file under it turns up here in date order.",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Band title",
+          "type": "string",
+          "default": "",
+          "description": "Leave empty for an unlabelled band, the way a real front page runs."
+        },
+        {
+          "key": "tag",
+          "label": "Tag",
+          "type": "string",
+          "default": "",
+          "description": "Type the tag the way you wrote it on the post — Business, The Economy, Asia Pacific. Capitals and spaces do not matter. Not sure what you have used? Open a Section front with no tag set: the filter chips across the top list every tag on the site. Leave empty to show the latest posts regardless of tag."
+        },
+        {
+          "key": "layout",
+          "label": "Layout",
+          "type": "select",
+          "options": [
+            "three across",
+            "four across",
+            "two across",
+            "ledger",
+            "opinion strip"
+          ],
+          "default": "three across"
+        },
+        {
+          "key": "count",
+          "label": "How many",
+          "type": "number",
+          "default": 6
+        },
+        {
+          "key": "show_dates",
+          "label": "Show dates",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "more_url",
+          "label": "'More' links to",
+          "type": "string",
+          "default": "",
+          "description": "Optional path to the section front, e.g. /business."
+        },
+        {
+          "key": "show_images",
+          "label": "Show pictures",
+          "type": "boolean",
+          "default": true,
+          "description": "Print each story's featured image. Grid layouts only; the ledger and opinion strip stay text."
+        }
+      ]
+    },
+    {
+      "key": "show_navigation",
+      "label": "Show the masthead and section rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Appearance"
+    }
+  ]
+}

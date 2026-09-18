@@ -1,0 +1,346 @@
+{
+  "name": "Broadsheet",
+  "slug": "broadsheet",
+  "version": "1.0.0",
+  "render_version": "v1",
+  "author": "Masthead",
+  "description": "A newspaper. Serif headlines, hairline column rules, a proper masthead and a grouped section rail.",
+  "tokens": [
+    {
+      "key": "edition_line",
+      "label": "Edition line",
+      "type": "string",
+      "default": "All the news that fits",
+      "category": "Masthead",
+      "description": "Small line printed beside the date, above the masthead."
+    },
+    {
+      "key": "flag_align",
+      "label": "Masthead alignment",
+      "type": "select",
+      "options": ["centered", "left"],
+      "default": "centered",
+      "category": "Masthead"
+    },
+    {
+      "key": "flag_scale",
+      "label": "Masthead size",
+      "type": "select",
+      "options": ["modest", "normal", "grand"],
+      "default": "normal",
+      "category": "Masthead"
+    },
+    {
+      "key": "show_date",
+      "label": "Print today's date",
+      "type": "boolean",
+      "default": true,
+      "category": "Masthead"
+    },
+    {
+      "key": "show_tagline",
+      "label": "Show site description under the masthead",
+      "type": "boolean",
+      "default": false,
+      "category": "Masthead"
+    },
+    {
+      "key": "nav",
+      "label": "Sections",
+      "type": "list",
+      "item_label": "Section",
+      "category": "Navigation",
+      "default": [],
+      "description": "The section rail. Leave 'Drops down under' empty for a top-level section; fill it with the label of another section to nest this one into that section's dropdown.",
+      "fields": [
+        { "key": "label", "label": "Label", "type": "string", "default": "" },
+        { "key": "url", "label": "Links to", "type": "string", "default": "/" },
+        {
+          "key": "parent",
+          "label": "Drops down under",
+          "type": "string",
+          "default": "",
+          "description": "Label of the top-level section this belongs to. Empty means top-level."
+        },
+        {
+          "key": "note",
+          "label": "Note",
+          "type": "string",
+          "default": "",
+          "description": "Optional one-liner shown under the link inside a dropdown."
+        }
+      ]
+    },
+    {
+      "key": "nav_sticky",
+      "label": "Section rail sticks to the top when scrolling",
+      "type": "boolean",
+      "default": true,
+      "category": "Navigation"
+    },
+    {
+      "key": "nav_fallback_pages",
+      "label": "Fall back to your pages when no sections are set",
+      "type": "boolean",
+      "default": true,
+      "category": "Navigation"
+    },
+    {
+      "key": "paper",
+      "label": "Paper",
+      "type": "color",
+      "default": "#ffffff",
+      "category": "Colors"
+    },
+    {
+      "key": "ink",
+      "label": "Ink",
+      "type": "color",
+      "default": "#121212",
+      "category": "Colors"
+    },
+    {
+      "key": "muted",
+      "label": "Secondary ink",
+      "type": "color",
+      "default": "#666666",
+      "category": "Colors"
+    },
+    {
+      "key": "rule",
+      "label": "Rules and hairlines",
+      "type": "color",
+      "default": "#dfdfdf",
+      "category": "Colors"
+    },
+    {
+      "key": "accent",
+      "label": "Accent",
+      "type": "color",
+      "default": "#326891",
+      "category": "Colors"
+    },
+    {
+      "key": "flag_color",
+      "label": "Masthead ink",
+      "type": "color",
+      "default": "#121212",
+      "category": "Colors"
+    },
+    {
+      "key": "headline_font",
+      "label": "Headline face",
+      "type": "select",
+      "options": [
+        "Playfair Display",
+        "Libre Baskerville",
+        "Source Serif 4",
+        "Spectral",
+        "Lora",
+        "PT Serif",
+        "Bodoni Moda"
+      ],
+      "default": "Playfair Display",
+      "category": "Typography"
+    },
+    {
+      "key": "body_font",
+      "label": "Body face",
+      "type": "select",
+      "options": [
+        "Source Serif 4",
+        "Spectral",
+        "Lora",
+        "PT Serif",
+        "Libre Baskerville",
+        "System serif"
+      ],
+      "default": "Source Serif 4",
+      "category": "Typography"
+    },
+    {
+      "key": "flag_font",
+      "label": "Masthead face",
+      "type": "select",
+      "options": [
+        "Match the headline face",
+        "UnifrakturMaguntia",
+        "Playfair Display",
+        "Bodoni Moda",
+        "Libre Baskerville"
+      ],
+      "default": "Match the headline face",
+      "category": "Typography",
+      "description": "UnifrakturMaguntia is the old blackletter look."
+    },
+    {
+      "key": "base_size",
+      "label": "Body text size",
+      "type": "length",
+      "default": "18px",
+      "category": "Typography"
+    },
+    {
+      "key": "headline_scale",
+      "label": "Headline size",
+      "type": "select",
+      "options": ["compact", "normal", "large"],
+      "default": "normal",
+      "category": "Typography"
+    },
+    {
+      "key": "justify_body",
+      "label": "Justify body text like a printed column",
+      "type": "boolean",
+      "default": false,
+      "category": "Typography"
+    },
+    {
+      "key": "drop_cap",
+      "label": "Drop cap on articles",
+      "type": "boolean",
+      "default": true,
+      "category": "Typography"
+    },
+    {
+      "key": "max",
+      "label": "Page width",
+      "type": "length",
+      "default": "1280px",
+      "category": "Layout"
+    },
+    {
+      "key": "article_max",
+      "label": "Article measure",
+      "type": "length",
+      "default": "40rem",
+      "category": "Layout"
+    },
+    {
+      "key": "column_rules",
+      "label": "Hairlines between columns",
+      "type": "boolean",
+      "default": true,
+      "category": "Layout"
+    },
+    {
+      "key": "favicon",
+      "label": "Favicon",
+      "type": "file",
+      "default": "",
+      "category": "Layout"
+    },
+    {
+      "key": "show_search",
+      "label": "Show post search",
+      "type": "boolean",
+      "default": true,
+      "category": "Posts"
+    },
+    {
+      "key": "show_tags",
+      "label": "Show tags on posts",
+      "type": "boolean",
+      "default": true,
+      "category": "Posts"
+    },
+    {
+      "key": "show_reading_time",
+      "label": "Show an estimated reading time",
+      "type": "boolean",
+      "default": false,
+      "category": "Posts"
+    },
+    {
+      "key": "footer_nav",
+      "label": "Repeat the sections as footer columns",
+      "type": "boolean",
+      "default": true,
+      "category": "Footer"
+    },
+    {
+      "key": "footer_note",
+      "label": "Colophon",
+      "type": "text",
+      "default": "",
+      "category": "Footer",
+      "description": "A line or two at the foot of every page."
+    }
+  ],
+  "post_options": [
+    {
+      "key": "featured_image",
+      "label": "Featured image",
+      "type": "file",
+      "default": "",
+      "category": "Picture",
+      "description": "Printed under the headline, and wherever the story is promoted: the lead, the front-page grids, section grids and the magazine's latest band."
+    },
+    {
+      "key": "featured_image_alt",
+      "label": "Describe the picture",
+      "type": "string",
+      "default": "",
+      "category": "Picture",
+      "description": "For screen readers. Leave empty if the picture is decorative."
+    },
+    {
+      "key": "caption",
+      "label": "Caption",
+      "type": "string",
+      "default": "",
+      "category": "Picture",
+      "description": "Printed under the picture. Put the credit here too."
+    },
+    {
+      "key": "kicker",
+      "label": "Kicker",
+      "type": "string",
+      "default": "",
+      "category": "Headline",
+      "description": "Small label above the headline. Leave empty to use the story's first tag."
+    },
+    {
+      "key": "byline",
+      "label": "Byline",
+      "type": "string",
+      "default": "",
+      "category": "Headline",
+      "description": "e.g. By Marit Halvorsen. Also printed when the story is the front-page lead."
+    }
+  ],
+  "page_options": [
+    {
+      "key": "kicker",
+      "label": "Kicker",
+      "type": "string",
+      "default": "",
+      "category": "Header",
+      "description": "Small label printed above the page title."
+    },
+    {
+      "key": "standfirst",
+      "label": "Standfirst",
+      "type": "text",
+      "default": "",
+      "category": "Header",
+      "description": "A sentence or two printed under the page title."
+    },
+    {
+      "key": "layout",
+      "label": "Page layout",
+      "type": "select",
+      "options": ["contained", "wide"],
+      "default": "contained",
+      "category": "Appearance",
+      "description": "'Wide' uses the full page width instead of the article measure."
+    },
+    {
+      "key": "show_navigation",
+      "label": "Show the masthead and section rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Appearance"
+    }
+  ]
+}

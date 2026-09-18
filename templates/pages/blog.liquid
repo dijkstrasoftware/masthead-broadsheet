@@ -1,0 +1,45 @@
+{% assign locked_tag = page.page_options.tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}
+{% if locked_tag == "" %}
+  {% assign filed = posts %}
+{% else %}
+  {% assign filed = posts | where_tag: locked_tag %}
+{% endif %}
+{% assign filed_count = filed | size %}
+
+<div class="section-front latest-{{ page.page_options.style | default: 'ledger' }}">
+  <header class="band-head">
+    {% if page.page_options.kicker != "" %}<p class="kicker">{{ page.page_options.kicker | escape }}</p>{% endif %}
+    <h1 class="band-title band-title-lg">{{ page.title | escape }}</h1>
+    {% if page.page_options.standfirst != "" %}<p class="standfirst">{{ page.page_options.standfirst | escape }}</p>{% endif %}
+  </header>
+
+  {% if body_html != "" %}<div class="page-body measure">{{ body_html }}</div>{% endif %}
+
+  {% if locked_tag == "" and theme.tokens.show_tags and tags != empty %}
+    <nav class="tag-filter" aria-label="Filter posts by tag">
+      <a href="{{ page.url }}" class="tag{% unless current_tag %} tag-active{% endunless %}">All</a>
+      {% for tag in tags %}
+        <a href="?tag={{ tag.slug }}" class="tag{% if tag.active %} tag-active{% endif %}">{{ tag.name | escape }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+
+  {% if filed_count == 0 %}
+    <p class="empty">No stories filed here yet.</p>
+  {% else %}
+    <ul class="ledger">
+      {% for post in filed %}
+        <li>
+          <a href="{{ post.url }}">
+            {% if page.page_options.style == "grid" and post.post_options.featured_image != "" %}<img class="story-image" src="{{ post.post_options.featured_image }}" alt="{{ post.post_options.featured_image_alt | escape }}" loading="lazy" />{% endif %}
+            <h2 class="headline">{{ post.title | escape }}</h2>
+            {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+          </a>
+          {% if page.page_options.show_dates != false and post.published_at %}
+            <time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%B %-d, %Y" }}</time>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

@@ -1,0 +1,66 @@
+{% assign cover = page.page_options.cover %}
+<div class="magazine">
+  {% if page.page_options.show_cover and cover.headline != "" %}
+    <section class="cover cover-{{ cover.treatment | default: 'overlay' }}{% if cover.image == "" %} cover-textonly{% endif %}">
+      {% if cover.image != "" %}<img class="cover-image" src="{{ cover.image }}" alt="" />{% endif %}
+      <div class="cover-text">
+        {% if cover.kicker != "" %}<p class="kicker">{{ cover.kicker | escape }}</p>{% endif %}
+        <h1 class="headline"><a href="{{ cover.url | default: '#' }}">{{ cover.headline | escape }}</a></h1>
+        {% if cover.standfirst != "" %}<p class="standfirst">{{ cover.standfirst | escape }}</p>{% endif %}
+        {% if cover.byline != "" %}<p class="byline">{{ cover.byline | escape }}</p>{% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if page.page_options.show_features and page.page_options.features != empty %}
+    <section class="band features">
+      {% if page.page_options.features_title != "" %}<h2 class="band-title">{{ page.page_options.features_title | escape }}</h2>{% endif %}
+      <div class="feature-list">
+        {% for feature in page.page_options.features %}
+          <article class="feature{% if feature.image == "" %} feature-textonly{% endif %}">
+            <a href="{{ feature.url | default: '#' }}">
+              {% if feature.image != "" %}<img src="{{ feature.image }}" alt="" loading="lazy" />{% endif %}
+              <div>
+                {% if feature.kicker != "" %}<p class="kicker">{{ feature.kicker | escape }}</p>{% endif %}
+                <h3 class="headline">{{ feature.headline | escape }}</h3>
+                {% if feature.summary != "" %}<p class="summary">{{ feature.summary | escape }}</p>{% endif %}
+                {% if feature.byline != "" %}<p class="byline">{{ feature.byline | escape }}</p>{% endif %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if page.page_options.show_note and page.page_options.note.text != "" %}
+    <section class="band editors-note">
+      {% if page.page_options.note.title != "" %}<h2 class="band-title">{{ page.page_options.note.title | escape }}</h2>{% endif %}
+      <p>{{ page.page_options.note.text | escape }}</p>
+      {% if page.page_options.note.signature != "" %}<p class="signature">{{ page.page_options.note.signature | escape }}</p>{% endif %}
+    </section>
+  {% endif %}
+
+  {% if body_html != "" %}<div class="page-body measure">{{ body_html }}</div>{% endif %}
+
+  {% assign posts_tag = page.page_options.posts_tag | default: "" | strip | downcase | replace: " & ", " " | replace: "/", " " | replace: " ", "-" %}{% if posts_tag == "" %}{% assign filed = posts %}{% else %}{% assign filed = posts | where_tag: posts_tag %}{% endif %}{% assign filed_count = filed | size %}
+      {% if page.page_options.show_posts and filed_count > 0 %}
+    <section class="band latest latest-grid">
+      {% if page.page_options.posts_title != "" %}<h2 class="band-title">{{ page.page_options.posts_title | escape }}</h2>{% endif %}
+      <ul class="ledger">
+        {% for post in filed limit: page.page_options.posts_count %}
+          <li>
+            <a href="{{ post.url }}">
+              {% if post.post_options.featured_image != "" %}<img class="story-image" src="{{ post.post_options.featured_image }}" alt="{{ post.post_options.featured_image_alt | escape }}" loading="lazy" />{% endif %}
+              <h3 class="headline">{{ post.title | escape }}</h3>
+              {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+            </a>
+            {% if post.published_at %}
+              <time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%b %-d" }}</time>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</div>

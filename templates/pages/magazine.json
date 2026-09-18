@@ -1,0 +1,197 @@
+{
+  "label": "Magazine",
+  "description": "The weekend edition. One full-bleed cover story, a run of features with big pictures, and an optional editor's note. Slower and more pictorial than the front page.",
+  "page_options": [
+    {
+      "key": "show_cover",
+      "label": "Show cover story",
+      "type": "boolean",
+      "default": true,
+      "category": "Cover"
+    },
+    {
+      "key": "cover",
+      "label": "Cover story",
+      "type": "object",
+      "category": "Cover",
+      "fields": [
+        {
+          "key": "image",
+          "label": "Image",
+          "type": "file",
+          "default": ""
+        },
+        {
+          "key": "kicker",
+          "label": "Kicker",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "standfirst",
+          "label": "Standfirst",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "byline",
+          "label": "Byline",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "url",
+          "label": "Links to",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "treatment",
+          "label": "Treatment",
+          "type": "select",
+          "options": [
+            "overlay",
+            "stacked"
+          ],
+          "default": "overlay",
+          "description": "'Overlay' prints the headline on the image; 'stacked' sets it underneath."
+        }
+      ]
+    },
+    {
+      "key": "show_features",
+      "label": "Show features",
+      "type": "boolean",
+      "default": true,
+      "category": "Features"
+    },
+    {
+      "key": "features_title",
+      "label": "Band title",
+      "type": "string",
+      "default": "In this issue",
+      "category": "Features"
+    },
+    {
+      "key": "features",
+      "label": "Features",
+      "type": "list",
+      "item_label": "Feature",
+      "category": "Features",
+      "default": [],
+      "fields": [
+        {
+          "key": "image",
+          "label": "Image",
+          "type": "file",
+          "default": ""
+        },
+        {
+          "key": "kicker",
+          "label": "Kicker",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "summary",
+          "label": "Summary",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "byline",
+          "label": "Byline",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "url",
+          "label": "Links to",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "key": "show_note",
+      "label": "Show editor's note",
+      "type": "boolean",
+      "default": false,
+      "category": "Editor's note"
+    },
+    {
+      "key": "note",
+      "label": "Editor's note",
+      "type": "object",
+      "category": "Editor's note",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string",
+          "default": "From the editor"
+        },
+        {
+          "key": "text",
+          "label": "Text",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "signature",
+          "label": "Signature",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "key": "show_posts",
+      "label": "Show latest posts",
+      "type": "boolean",
+      "default": true,
+      "category": "Latest posts"
+    },
+    {
+      "key": "posts_tag",
+      "label": "Tag",
+      "type": "string",
+      "default": "",
+      "category": "Latest posts",
+      "description": "Type the tag the way you wrote it on the post — Business, The Economy, Asia Pacific. Capitals and spaces do not matter. Not sure what you have used? Open a Section front with no tag set: the filter chips across the top list every tag on the site. Leave empty for the latest posts regardless of tag."
+    },
+    {
+      "key": "posts_title",
+      "label": "Band title",
+      "type": "string",
+      "default": "Also this week",
+      "category": "Latest posts"
+    },
+    {
+      "key": "posts_count",
+      "label": "How many",
+      "type": "number",
+      "default": 4,
+      "category": "Latest posts"
+    },
+    {
+      "key": "show_navigation",
+      "label": "Show the masthead and section rail",
+      "type": "boolean",
+      "default": true,
+      "category": "Appearance"
+    }
+  ]
+}

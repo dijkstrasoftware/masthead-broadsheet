@@ -1,0 +1,46 @@
+<div class="section-front">
+  <header class="band-head">
+    <h1 class="band-title band-title-lg">{{ site.name | escape }}</h1>
+    {% if site.description != "" %}<p class="standfirst">{{ site.description | escape }}</p>{% endif %}
+    {% if theme.tokens.show_search %}
+      <form action="/search" method="get" class="search" role="search">
+        <input type="search" name="q" value="{{ search_query | escape }}" placeholder="Search&hellip;" aria-label="Search posts" />
+        <button type="submit">Search</button>
+      </form>
+    {% endif %}
+  </header>
+
+  {% if search_query %}
+    <p class="result-count">{{ search_count }} result{% unless search_count == 1 %}s{% endunless %} for &ldquo;{{ search_query | escape }}&rdquo;</p>
+  {% endif %}
+
+  {% if theme.tokens.show_tags and tags != empty %}
+    <nav class="tag-filter" aria-label="Filter posts by tag">
+      <a href="/" class="tag{% unless current_tag %} tag-active{% endunless %}">All</a>
+      {% for tag in tags %}
+        <a href="?tag={{ tag.slug }}" class="tag{% if tag.active %} tag-active{% endif %}">{{ tag.name | escape }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+
+  {% if posts == empty %}
+    <p class="empty">{% if search_query %}Nothing matches that search.{% else %}No stories yet.{% endif %}</p>
+  {% else %}
+    <ul class="ledger">
+      {% for post in posts %}
+        <li>
+          <a href="{{ post.url }}">
+            <h2 class="headline">{{ post.title | escape }}</h2>
+            {% if post.excerpt != "" %}<p class="summary">{{ post.excerpt | escape }}</p>{% endif %}
+          </a>
+          <p class="meta">
+            {% if post.published_at %}<time datetime="{{ post.published_at | iso8601 }}">{{ post.published_at | strftime: "%B %-d, %Y" }}</time>{% endif %}
+            {% if theme.tokens.show_tags and post.tags != empty %}
+              {% for tag in post.tags %}<span class="tag-pill">{{ tag.name | escape }}</span>{% endfor %}
+            {% endif %}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

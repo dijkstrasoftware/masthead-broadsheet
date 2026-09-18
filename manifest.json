@@ -1,7 +1,7 @@
 {
   "name": "Broadsheet",
   "slug": "broadsheet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "render_version": "v1",
   "author": "Masthead",
   "description": "A newspaper. Serif headlines, hairline column rules, a proper masthead and a grouped section rail.",
